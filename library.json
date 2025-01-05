@@ -1,0 +1,25 @@
+{
+    "name": "AlaToolsLib",
+    "keywords": [ "wlan" ],
+    "description": "Diverse Tools, die ich immer wieder brauche",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/hsaturn/TinyMqtt.git"
+    },
+    "authors":
+    [
+    {
+        "name": "Albert Lauchner",
+        "email": "albert@lauchner.de",
+        "maintainer": true
+}
+]
+    "version": "0.0.1",
+    "exclude": "",
+    "examples": "examples/*/main.cpp",
+    "frameworks": "arduino",
+    "platforms": [
+        "espressif8266",
+        "espressif32"
+    ]
+}
