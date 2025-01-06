@@ -1,7 +1,12 @@
+#if defined(ESP8266)
+#include <ESP8266HTTPClient.h>
+#include <ESP8266WiFi.h>
+#elif defined(ESP32)
 #include <HTTPClient.h>
-#include <EEPROM.h>
 #include <WiFi.h>
+#endif
 
+#include <EEPROM.h>
 #include "alaToolsLib.h"
 
 #define EEP_MAGIC 123456
@@ -30,7 +35,11 @@ void WifiBegin(const String ssid, const String password)
     }
     DEBUG("IP %s", WiFi.localIP().toString().c_str());
 
+#if defined(ESP8266)
+    configTime(MY_TZ, "fritz.box", "de.pool.ntp.org"); // --> Here is the IMPORTANT ONE LINER needed in your sketch!
+#elif defined(ESP32)
     configTime(0, 0, "fritz.box", "de.pool.ntp.org"); // --> Here is the IMPORTANT ONE LINER needed in your sketch!
+#endif
 
     while (GetNowTm().tm_year < 125) // Jahr 2025
     {
@@ -38,8 +47,11 @@ void WifiBegin(const String ssid, const String password)
         yield();
         DEBUG("NTP not OK");
     }
+#if defined(ESP32)
     setenv("TZ", MY_TZ, 1);
     tzset();
+#endif
+
     DEBUG("Lokal time is %s", tm2TimeString(GetNowTm()).c_str());
     bootTime = GetNowTm();
 }
@@ -120,20 +132,5 @@ String UtcTime2LocalTimeString(time_t tt)
 {
     tm tm;
     localtime_r(&tt, &tm);
-    // format Time nach meinem Muster
-    auto d = String(tm.tm_mday);
-    d += ".";
-    d += String(tm.tm_mon + 1);
-    d += ".";
-    d += String(tm.tm_year + 1900);
-    auto t = String(tm.tm_hour);
-    t += ":";
-    if (tm.tm_min < 10) // add a zero if minute is under 10
-        t += "0";
-    t += String(tm.tm_min);
-    t += ":";
-    if (tm.tm_sec < 10) // add a zero if second is under 10
-        t += "0";
-    t += String(tm.tm_sec);
-    return d + " " + t;
+    return tm2TimeString(tm);
 }
