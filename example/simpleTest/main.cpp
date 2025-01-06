@@ -1,18 +1,17 @@
 #include <Arduino.h>
-#include <esp_task_wdt.h>
 
 
-#include "alaToolsLib.h"
-
+#include "alaTools.h"
+#define SERIAL_DEBUG true
 
 void setup()
 {
   Serial.begin(115200);
-  WifiBegin();
- 
+  WifiBegin("ssid", "password");
+  DEBUG("Hello world!"); 
 }
 
 void loop()
 {
-  esp_task_wdt_reset();  //reset watchdog
+
 }

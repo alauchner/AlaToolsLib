@@ -4,7 +4,7 @@
     "description": "Diverse Tools, die ich immer wieder brauche",
     "repository": {
         "type": "git",
-        "url": "https://github.com/hsaturn/TinyMqtt.git"
+        "url": "https://github.com/alauchner/AlaToolsLib"
     },
     "authors":
     [
@@ -12,8 +12,8 @@
         "name": "Albert Lauchner",
         "email": "albert@lauchner.de",
         "maintainer": true
-}
-]
+    }
+    ],
     "version": "0.0.1",
     "exclude": "",
     "examples": "examples/*/main.cpp",
